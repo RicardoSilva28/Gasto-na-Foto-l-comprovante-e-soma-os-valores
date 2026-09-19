@@ -1,34 +1,130 @@
 let totalGastos = 0;
 let quantidadeComprovantes = 0;
 
-let pedido = "Leia o comprovante da imagem e organize as informacoes de forma limpa e bonita para exibir em uma pagina web. Mostre o nome do estabelecimento apenas uma vez no inicio. Em seguida, liste cada produto em uma nova linha, mostrando um emoji relacionado ao produto, o nome do produto e o valor. Use este formato: 🛒 PRODUTO — R$ 0,00. No final, mostre o total com destaque usando: 💰 TOTAL: R$ 0,00. Nao repita o nome do estabelecimento em cada produto. Nao mostre categorias. Mantenha os valores exatamente como aparecem no comprovante. Nao adicione explicacoes ou comentarios.";
+
+
+// PEDIDO PARA A IA
+
+
+let pedido = "Leia o comprovante da imagem e organize as informacoes de forma limpa e bonita para exibir em uma pagina web. " +
+
+"Mostre o nome do estabelecimento apenas uma vez no inicio. " +
+
+"Em seguida, liste cada produto em uma nova linha, mostrando um emoji relacionado ao produto, o nome do produto e o valor. " +
+
+"Use este formato: 🛒 PRODUTO — R$ 0,00. " +
+
+"No final, mostre o total exatamente neste formato: 💰 TOTAL: R$ 0,00. " +
+
+"IMPORTANTE: use sempre R$ e nunca use $. " +
+
+"IMPORTANTE: valores como 16.5 significam dezesseis reais e cinquenta centavos. " +
+
+"Valores com ponto decimal devem ser tratados como numeros decimais. " +
+
+"Valores brasileiros como 1.250,50 significam mil duzentos e cinquenta reais e cinquenta centavos. " +
+
+"Nao repita o nome do estabelecimento. " +
+
+"Nao mostre categorias. " +
+
+"Nao adicione explicacoes ou comentarios.";
+
+
+
+// CONVERTER VALOR
+
+
+function converterValor(valor) {
+
+    valor = valor.trim();
+
+
+    // Remove R$ ou $
+    valor = valor.replace("R$", "");
+    valor = valor.replace("$", "");
+    valor = valor.trim();
+
+
+   
+    // TEM VIRGULA E PONTO
+    // Exemplo: 1.250,50
+   
+
+    if (valor.includes(",") && valor.includes(".")) {
+
+        valor = valor.replace(/\./g, "");
+        valor = valor.replace(",", ".");
+
+    }
+
+
+   
+    // TEM SOMENTE VIRGULA
+    // Exemplo: 16,50
+  
+
+    else if (valor.includes(",")) {
+
+        valor = valor.replace(",", ".");
+
+    }
+
+
+  
+    // TEM SOMENTE PONTO
+    // Exemplo: 16.5
+    //
+    // NÃO remover o ponto!
+  
+
+    else if (valor.includes(".")) {
+
+        valor = valor;
+
+    }
+
+
+    return Number(valor);
+}
+
+
+
+// LER FOTO
 
 
 async function lerFoto() {
 
-    // Pegar a foto escolhida
     let foto = document.querySelector(".foto").files[0];
 
-    // Se não escolher nenhuma foto, para aqui
+
     if (!foto) {
         return;
     }
 
-    // Enviar a foto para o Puter
+
+   
+    // ENVIAR PARA O PUTER
+   
+
     let resposta = await puter.ai.chat(pedido, foto);
 
-    // Pegar o texto que a IA respondeu
+
     let texto = resposta.message.content;
+
 
     console.log("RESPOSTA DA IA:");
     console.log(texto);
 
 
-    // ==========================================
+   
     // PEGAR O TOTAL DO COMPROVANTE
-    // ==========================================
+    
 
-    let partes = texto.match(/TOTAL\s*:\s*R\$\s*([\d.,]+)/i);
+    let partes = texto.match(
+        /TOTAL\s*:\s*(?:R\$|\$)\s*([\d.,]+)/i
+    );
+
 
     console.log("TOTAL ENCONTRADO:");
     console.log(partes);
@@ -36,22 +132,31 @@ async function lerFoto() {
 
     if (partes) {
 
-        // Pegar somente o número
-        let valor = partes[1];
+        let valor = converterValor(partes[1]);
 
-        // Transformar:
-        // 1.250,50 -> 1250.50
-        valor = valor.replace(/\./g, "").replace(",", ".");
 
-        // Transformar texto em número
-        valor = Number(valor);
+        console.log("VALOR CONVERTIDO:");
+        console.log(valor);
 
-        // Somar com os comprovantes anteriores
+
+       
+        // SOMAR AO TOTAL GERAL
+        
+
         totalGastos = totalGastos + valor;
 
-        // Mostrar o novo total no H2
+
+        console.log("TOTAL GERAL:");
+        console.log(totalGastos);
+
+
+       
+        // MOSTRAR NO TOPO
+       
+
         document.querySelector("#total-gastos").textContent =
-            "R$ " + totalGastos.toLocaleString("pt-BR", {
+            "R$ " +
+            totalGastos.toLocaleString("pt-BR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
             });
@@ -59,46 +164,61 @@ async function lerFoto() {
 
 
     
-    // CONTAR COMPROVANTES
+    // CONTADOR DE COMPROVANTES
     
 
     quantidadeComprovantes++;
 
+
     document.querySelector("#comprovante-lidos").textContent =
-        quantidadeComprovantes + " Comprovantes Lidos";
+        quantidadeComprovantes +
+        (
+            quantidadeComprovantes === 1
+                ? " Comprovante Lido"
+                : " Comprovantes Lidos"
+        );
 
 
-    
-    // CRIAR BLOCO DO COMPROVANTE
+   
+    // CRIAR BLOCO DA NOTA
     
 
     let novoBloco = document.createElement("div");
+
 
     novoBloco.classList.add("bloco-nota");
 
 
     
-    // FORMATAR O TEXTO
-    
+    // FORMATAR TEXTO
+   
 
-    let textoFormatado = texto.replace(/\n/g, "<br>");
+    let textoFormatado =
+        texto.replace(/\n/g, "<br>");
 
 
-    // Deixar somente o valor do TOTAL verde
+    // Remover ** do Markdown
+    textoFormatado =
+        textoFormatado.replace(/\*\*/g, "");
+
+
+   
+    // DEIXAR SOMENTE O TOTAL VERDE
+   
+
     textoFormatado = textoFormatado.replace(
-        /(💰\s*TOTAL:\s*)(R\$\s*[\d.,]+)/gi,
+        /(💰\s*TOTAL:\s*)(R\$\s*[\d.,]+|\$\s*[\d.,]+)/gi,
         '$1<span class="valor-total">$2</span>'
     );
 
 
-    // Colocar o texto dentro do bloco
+   
+    // MOSTRAR BLOCO
+    
+
     novoBloco.innerHTML = textoFormatado;
 
 
-    
-    // COLOCAR O BLOCO NA PÁGINA
-  
-
-    document.querySelector(".lista").appendChild(novoBloco);
-
+    document.querySelector(".lista")
+        .appendChild(novoBloco);
 }
