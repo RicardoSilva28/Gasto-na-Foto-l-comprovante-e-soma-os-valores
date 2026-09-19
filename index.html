@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.puter.com/v2/"></script>
+
+    <title>Projeto DevClub- Gasto na foto</title>
+</head>
+<body>
+    
+
+<div class="container">
+   
+         <h1>📷Gasto na Foto</h1>
+         <p class="texto1">Fotografe o Comprovante. A IA Anota Pra Você.</p>
+
+
+         <div class="container2">
+              <p class="texto2">Total Gastos</p>
+              <h2 id="total-gastos">R$ 0,00</h2>
+              <p id="comprovante-lidos">0 Comprovantes Lidos</p>
+        </div>
+
+         
+<label >
+        Toque para escolher o comprovante
+        <input class="foto" onchange="lerFoto()" type="file" accept="imge/*">
+</label>
+
+<div class="lista"></div>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

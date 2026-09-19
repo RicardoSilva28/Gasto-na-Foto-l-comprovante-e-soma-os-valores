@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body{
+    background-color: rgb(250, 248, 246);
+    
+}
+
+.container{
+   
+    text-align: center;
+    margin-top: 8%;
+   
+    
+   
+}
+
+.texto1{
+   color: rgba(4, 10, 4, 0.719);
+   margin-left: 30px;
+   font-weight: bold;
+
+}
+
+.texto2{
+    margin-top:10px ;
+    align-items: center;
+}
+
+.container2{
+    background-color: rgb(40, 104, 21);
+    width: 25%;
+    margin-left: 38%;
+    color: white;
+    border-radius: 10px;
+    padding: 4px;
+    margin-top: 20px;
+    font-weight: bold;
+   
+    
+}
+
+h2{
+    font-size: 40px;
+  
+}
+label{
+  
+    background-color: white;
+    border-radius: 15px;
+    padding: 28px;
+    text-align: center;
+    font-weight: bold;
+    border: 2px dotted rgb(180, 180, 180);
+     display: block;
+     margin: 16px;
+     width: 25%;
+     margin-left: 38%;
+     cursor: pointer;
+     
+}
+
+input{
+   
+    display: none;
+}
+
+label:hover {
+    background-color: rgb(201, 243, 201);
+    transition: 1s;
+}
+
+.lista {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+
+.bloco-nota {
+    width: 100%;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    background-color: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    text-align: left;
+
+    font-weight: bold;
+    
+}
+
+.valor-total {
+    color: #286815;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#totalGastos {
+    margin: 20px 0;
+
+    font-size: 28px;
+
+    text-align: center;
+}
+
+
