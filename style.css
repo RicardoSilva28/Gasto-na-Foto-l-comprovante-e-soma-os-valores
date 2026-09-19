@@ -1,82 +1,99 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: sans-serif;
 }
 
-body{
+body {
     background-color: rgb(250, 248, 246);
-    
+    min-height: 100vh;
 }
 
-.container{
-   
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 80px auto 0;
+    padding: 0 20px;
     text-align: center;
-    margin-top: 8%;
-   
-    
-   
 }
 
-.texto1{
-   color: rgba(4, 10, 4, 0.719);
-   margin-left: 30px;
-   font-weight: bold;
 
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
 }
 
-.texto2{
-    margin-top:10px ;
-    align-items: center;
+.texto1 {
+    color: rgba(4, 10, 4, 0.719);
+    font-weight: bold;
 }
 
-.container2{
+
+
+.container2 {
     background-color: rgb(40, 104, 21);
-    width: 25%;
-    margin-left: 38%;
+    width: 100%;
+    max-width: 400px;
+
+    margin: 20px auto;
+
     color: white;
     border-radius: 10px;
-    padding: 4px;
-    margin-top: 20px;
+    padding: 15px;
+
     font-weight: bold;
-   
-    
 }
 
-h2{
+.texto2 {
+    margin-bottom: 5px;
+}
+
+h2 {
     font-size: 40px;
-  
-}
-label{
-  
-    background-color: white;
-    border-radius: 15px;
-    padding: 28px;
-    text-align: center;
-    font-weight: bold;
-    border: 2px dotted rgb(180, 180, 180);
-     display: block;
-     margin: 16px;
-     width: 25%;
-     margin-left: 38%;
-     cursor: pointer;
-     
 }
 
-input{
-   
-    display: none;
+
+
+label {
+    display: block;
+
+    width: 100%;
+    max-width: 400px;
+
+    margin: 20px auto;
+
+    background-color: white;
+
+    border-radius: 15px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    border: 2px dotted rgb(180, 180, 180);
+
+    cursor: pointer;
 }
 
 label:hover {
     background-color: rgb(201, 243, 201);
-    transition: 1s;
+    transition: 0.5s;
 }
+
+input {
+    display: none;
+}
+
+
 
 .lista {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
+
     margin: 20px auto;
 }
 
@@ -103,21 +120,60 @@ label:hover {
     text-align: left;
 
     font-weight: bold;
-    
+
+    overflow-wrap: break-word;
 }
+
 
 .valor-total {
     color: #286815;
+
     font-weight: bold;
+
     font-size: 20px;
 }
 
-#totalGastos {
-    margin: 20px 0;
 
-    font-size: 28px;
 
-    text-align: center;
+@media (max-width: 600px) {
+
+    .container {
+        margin-top: 40px;
+        padding: 0 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .texto1 {
+        font-size: 14px;
+    }
+
+    .container2 {
+        max-width: 100%;
+        padding: 15px 10px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    label {
+        max-width: 100%;
+        padding: 22px 15px;
+    }
+
+    .lista {
+        max-width: 100%;
+    }
+
+    .bloco-nota {
+        padding: 20px;
+        font-size: 13px;
+    }
+
+    .valor-total {
+        font-size: 18px;
+    }
 }
-
-
